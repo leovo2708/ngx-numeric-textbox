@@ -1,0 +1,36 @@
+<div class="container">
+  <h2>ngx-numeric-textbox Angular numeric textbox component</h2>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <p><strong>Configuration</strong></p>
+      </div>
+      <div class="form-group row">
+        <label for="min" class="col-2 col-form-label">Min</label>
+        <input id="min" [(ngModel)]="min" type="number" class="col-10 form-control" placeholder="Min">
+      </div>
+      <div class="form-group row">
+        <label for="max" class="col-2 col-form-label">Max</label>
+        <input id="max" [(ngModel)]="max" type="number" class="col-10 form-control" placeholder="Max">
+      </div>
+      <div class="form-group row">
+        <label for="decimals" class="col-2 col-form-label">Decimals</label>
+        <input id="decimals" [(ngModel)]="decimals" type="number" class="col-10 form-control" placeholder="Decimals">
+      </div>
+      <div class="form-group row">
+        <label for="format" class="col-2 col-form-label">Format</label>
+        <input id="format" [(ngModel)]="format" type="text" class="col-10 form-control" placeholder="Format">
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="form-group">
+        <p><strong>Component</strong></p>
+      </div>
+      <div class="form-group">
+        <ngx-numeric-textbox [min]="min" [max]="max" [decimals]="decimals" [format]="format" [(value)]="value" [placeholder]="placeholder">
+        </ngx-numeric-textbox>
+        <p>Output: {{value}}</p>
+      </div>
+    </div>
+  </div>
+</div>
