@@ -124,7 +124,9 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
     ngOnChanges(changes: SimpleChanges) {
         this.verifySettings();
 
+        let invokeNgChange = false;
         if (Helper.anyChanges(['min'], changes)) {
+            invokeNgChange = true;
             if (Helper.isNumber(this.min)) {
                 this.minValidateFn = createMinValidator(this.min);
             } else {
@@ -133,11 +135,16 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
         }
 
         if (Helper.anyChanges(['max'], changes)) {
+            invokeNgChange = true;
             if (Helper.isNumber(this.max)) {
                 this.maxValidateFn = createMaxValidator(this.max);
             } else {
                 this.maxValidateFn = Validators.nullValidator;
             }
+        }
+
+        if (invokeNgChange) {
+            this.ngChange(this.value);
         }
 
         let invokeSetInputValue = false;
