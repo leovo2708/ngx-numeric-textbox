@@ -2,7 +2,10 @@ import {
     Component, Input, Output, EventEmitter, ViewChild, ElementRef,
     Renderer, forwardRef, OnChanges, SimpleChanges
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
+import {
+    NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, AbstractControl,
+    ValidatorFn, ControlValueAccessor, Validators
+} from '@angular/forms';
 import * as numeral from 'numeral';
 import * as _ from 'lodash';
 
@@ -30,6 +33,36 @@ const Helper = {
     }
 };
 
+export function createMinValidator(min: number): ValidatorFn {
+    return (control: AbstractControl) => {
+        if (Helper.isNumber(control.value) && control.value < min) {
+            return {
+                minError: {
+                    minValue: min,
+                    value: control.value
+                }
+            };
+        }
+
+        return null;
+    };
+}
+
+export function createMaxValidator(max: number): ValidatorFn {
+    return (control: AbstractControl) => {
+        if (Helper.isNumber(control.value) && control.value > max) {
+            return {
+                maxError: {
+                    maxValue: max,
+                    value: control.value
+                }
+            };
+        }
+
+        return null;
+    };
+}
+
 @Component({
     selector: 'ngx-numeric-textbox',
     templateUrl: './numeric-textbox.component.html',
@@ -47,7 +80,7 @@ const Helper = {
     ],
     exportAs: 'ngxNumericTextbox'
 })
-export class NumericTextboxComponent implements OnChanges {
+export class NumericTextboxComponent implements ControlValueAccessor, Validator, OnChanges {
     @ViewChild('numericInput') numericInput: ElementRef;
     @Input() min = Number.MIN_SAFE_INTEGER;
     @Input() max = Number.MAX_SAFE_INTEGER;
@@ -56,18 +89,57 @@ export class NumericTextboxComponent implements OnChanges {
     @Input() decimals = 2;
     @Input() disabled = false;
     @Input() format = '0,0.00';
+    @Input() autoCorrect = false;
     @Output() valueChange = new EventEmitter<number>();
-    private autoCorrect = true;
+    private minValidateFn = Validators.nullValidator;
+    private maxValidateFn = Validators.nullValidator;
     private focused = false;
     private inputValue: string;
     private previousValue = undefined;
+    private ngChange = (value: number) => { };
+    private ngTouched = () => { };
 
     constructor(
         private renderer: Renderer
     ) { }
 
+    validate(control: AbstractControl): { [key: string]: any } {
+        return this.minValidateFn(control) || this.maxValidateFn(control);
+    }
+
+    writeValue(value: number) {
+        const newValue = this.restrictModelValue(value);
+        this.value = newValue;
+        this.setInputValue();
+    }
+
+    registerOnChange(fn: any) {
+        this.ngChange = fn;
+    }
+
+    registerOnTouched(fn: any) {
+        this.ngTouched = fn;
+    }
+
     ngOnChanges(changes: SimpleChanges) {
         this.verifySettings();
+
+        if (Helper.anyChanges(['min'], changes)) {
+            if (Helper.isNumber(this.min)) {
+                this.minValidateFn = createMinValidator(this.min);
+            } else {
+                this.minValidateFn = Validators.nullValidator;
+            }
+        }
+
+        if (Helper.anyChanges(['max'], changes)) {
+            if (Helper.isNumber(this.max)) {
+                this.maxValidateFn = createMaxValidator(this.max);
+            } else {
+                this.maxValidateFn = Validators.nullValidator;
+            }
+        }
+
         let invokeSetInputValue = false;
         if (this.previousValue === undefined) {
             if (Helper.anyChanges(['value'], changes)) {
@@ -119,14 +191,14 @@ export class NumericTextboxComponent implements OnChanges {
         if (!this.focused) {
             this.focused = true;
             this.setInputValue();
+            setTimeout(() => this.setSelection(0, this.inputValue.length));
         }
-
-        setTimeout(() => this.setSelection(0, this.inputValue.length));
     }
 
     handleBlur() {
         if (this.focused) {
             this.focused = false;
+            this.ngTouched();
             this.setInputValue();
         }
     }
@@ -194,6 +266,15 @@ export class NumericTextboxComponent implements OnChanges {
         return true;
     }
 
+    private restrictModelValue(value: number): number {
+        let newValue = this.restrictDecimals(value);
+        if (this.autoCorrect && this.limitValue(newValue) !== newValue) {
+            newValue = null;
+        }
+
+        return newValue;
+    }
+
     private restrictDecimals(value: number): number {
         if (Helper.isNumber(this.decimals) && this.decimals > 0) {
             const words = String(value).split('.');
@@ -221,6 +302,7 @@ export class NumericTextboxComponent implements OnChanges {
         if (this.value !== value) {
             this.previousValue = this.value;
             this.value = value;
+            this.ngChange(value);
             this.valueChange.emit(value);
         }
     }

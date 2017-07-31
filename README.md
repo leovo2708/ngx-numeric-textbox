@@ -40,13 +40,16 @@ export class AppModule {
 <ngx-numeric-textbox
     [min]="min"
     [max]="max"
+    [disabled]="disabled"
     [decimals]="decimals"
     [format]="format"
     [placeholder]="placeholder"
-    [(value)]="value"
-    (valueChange)="onValueChange($event)">
+    [(ngModel)]="value"
+    (ngModelChange)="ngModelChange($event)">
 </ngx-numeric-textbox>
 ```
+
+* format string: http://numeraljs.com/#format
 
 ## Contributing
 
