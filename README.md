@@ -26,9 +26,18 @@ Once installed you need to import our main module in your application module:
 import { NumericTextboxModule } from 'ngx-numeric-textbox';
 
 @NgModule({
-  declarations: [AppComponent, ...],
-  imports: [NumericTextboxModule, ...],  
-  bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    ...
+  ],
+  imports: [
+    FormsModule,
+    NumericTextboxModule,
+    ...
+  ],  
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule {
 }
@@ -44,7 +53,10 @@ export class AppModule {
     [decimals]="decimals"
     [format]="format"
     [placeholder]="placeholder"
+    [rangeValidation]="rangeValidation"
     [(ngModel)]="value"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
     (ngModelChange)="ngModelChange($event)">
 </ngx-numeric-textbox>
 ```

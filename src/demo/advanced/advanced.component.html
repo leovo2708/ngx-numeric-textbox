@@ -1,0 +1,42 @@
+<div class="text-success">
+    Note: Orange &lt;= Yellow &lt;= Red. If value is 0 then there is no need to validate.
+</div>
+<br>
+<form #settingForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <ngx-win-limit-setting-textbox name="orangeWinLimit" [min]="0" [max]="yellowWinLimit" [(ngModel)]="orangeWinLimit" #orange="ngModel">
+                </ngx-win-limit-setting-textbox>
+            </div>
+            <div *ngIf="orange.invalid" class="alert alert-danger">
+                Orange &lt;= Yellow
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <ngx-win-limit-setting-textbox name="yellowWinLimit" [min]="orangeWinLimit" [max]="redWinLimit" [(ngModel)]="yellowWinLimit"
+                    #yellow="ngModel">
+                </ngx-win-limit-setting-textbox>
+            </div>
+            <div *ngIf="yellow.invalid">
+                <div [hidden]="!yellow.errors.minError" class="alert alert-danger">
+                    Yellow &gt;= Orange
+                </div>
+                <div [hidden]="!yellow.errors.maxError" class="alert alert-danger">
+                    Yellow &lt;= Red
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <ngx-win-limit-setting-textbox name="redWinLimit" [min]="yellowWinLimit" [max]="1000000000" [(ngModel)]="redWinLimit" #red="ngModel">
+                </ngx-win-limit-setting-textbox>
+            </div>
+            <div *ngIf="red.invalid" class="alert alert-danger">
+                Red &gt;= Yellow
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!settingForm.form.valid">Save</button>
+</form>

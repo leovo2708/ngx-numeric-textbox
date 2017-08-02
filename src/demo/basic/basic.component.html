@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-6">
+        <div class="form-group">
+            <p><strong>Configuration</strong></p>
+        </div>
+        <div class="form-group row">
+            <label for="value" class="col-2 col-form-label">Value</label>
+            <div class="col-10">
+                <input id="value" [(ngModel)]="value" type="number" class="form-control" placeholder="Min">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="min" class="col-2 col-form-label">Min</label>
+            <div class="col-10">
+                <input id="min" [(ngModel)]="min" type="number" class="form-control" placeholder="Min">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="max" class="col-2 col-form-label">Max</label>
+            <div class="col-10">
+                <input id="max" [(ngModel)]="max" type="number" class="form-control" placeholder="Max">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-12">
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+              <input type="checkbox" [(ngModel)]="disabled" class="form-check-input">
+              Disabled
+            </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+              <input type="checkbox" [(ngModel)]="autoCorrect" class="form-check-input">
+              Auto correct
+            </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+              <input type="checkbox" [(ngModel)]="rangeValidation" class="form-check-input">
+              Range validation
+            </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="decimals" class="col-2 col-form-label">Decimals</label>
+            <div class="col-10">
+                <input id="decimals" [(ngModel)]="decimals" type="number" class="form-control" placeholder="Decimals" min="0">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="format" class="col-2 col-form-label">Format</label>
+            <div class="col-10">
+                <input id="format" [(ngModel)]="format" type="text" class="form-control" placeholder="Format">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="format" class="col-2 col-form-label">Placeholder</label>
+            <div class="col-10">
+                <input id="format" [(ngModel)]="placeholder" type="text" class="form-control" placeholder="Placeholder">
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="form-group">
+            <p><strong>Component</strong></p>
+        </div>
+        <div class="form-group">
+            <form #templateForm="ngForm">
+                <ngx-numeric-textbox name="currency" [min]="min" [max]="max" [disabled]="disabled" [autoCorrect]="autoCorrect" [decimals]="decimals"
+                    [format]="format" [rangeValidation]="rangeValidation" [(ngModel)]="value" [placeholder]="placeholder" (ngModelChange)="onModelChange()"
+                    (focus)="onFocus()" (blur)="onBlur()">
+                </ngx-numeric-textbox>
+            </form>
+        </div>
+        <div class="form-group">
+            <p>Model: {{value}}</p>
+            <p>EventLog: {{eventLog}}</p>
+            <p>Validator: <span *ngIf="!templateForm.valid">{{templateForm.controls.currency.errors | json}}</span></p>
+        </div>
+    </div>
+</div>

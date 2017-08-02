@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { NumericTextboxModule } from 'ngx-numeric-textbox';
+import { BasicModule } from './basic';
+import { AdvancedModule } from './advanced';
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -11,7 +12,8 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     FormsModule,
-    NumericTextboxModule
+    BasicModule,
+    AdvancedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

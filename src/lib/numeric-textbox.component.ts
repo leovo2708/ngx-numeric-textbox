@@ -90,7 +90,12 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
     @Input() disabled = false;
     @Input() format = '0,0.00';
     @Input() autoCorrect = false;
+    @Input() rangeValidation = true;
     @Output() valueChange = new EventEmitter<number>();
+    // tslint:disable-next-line:no-output-rename
+    @Output('focus') onFocus = new EventEmitter();
+    // tslint:disable-next-line:no-output-rename
+    @Output('blur') onBlur = new EventEmitter();
     private minValidateFn = Validators.nullValidator;
     private maxValidateFn = Validators.nullValidator;
     private focused = false;
@@ -102,6 +107,14 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
     constructor(
         private renderer: Renderer
     ) { }
+
+    focus() {
+        this.renderer.invokeElementMethod(this.numericInput.nativeElement, 'focus');
+    }
+
+    blur() {
+        this.renderer.invokeElementMethod(this.numericInput.nativeElement, 'blur');
+    }
 
     validate(control: AbstractControl): { [key: string]: any } {
         return this.minValidateFn(control) || this.maxValidateFn(control);
@@ -121,29 +134,26 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
         this.ngTouched = fn;
     }
 
+    setDisabledState(isDisabled: boolean) {
+        this.disabled = isDisabled;
+    }
+
     ngOnChanges(changes: SimpleChanges) {
         this.verifySettings();
 
-        let invokeNgChange = false;
-        if (Helper.anyChanges(['min'], changes)) {
-            invokeNgChange = true;
-            if (Helper.isNumber(this.min)) {
+        if (Helper.anyChanges(['min', 'max', 'rangeValidation'], changes)) {
+            if (Helper.isNumber(this.min) && this.rangeValidation) {
                 this.minValidateFn = createMinValidator(this.min);
             } else {
                 this.minValidateFn = Validators.nullValidator;
             }
-        }
 
-        if (Helper.anyChanges(['max'], changes)) {
-            invokeNgChange = true;
-            if (Helper.isNumber(this.max)) {
+            if (Helper.isNumber(this.max) && this.rangeValidation) {
                 this.maxValidateFn = createMaxValidator(this.max);
             } else {
                 this.maxValidateFn = Validators.nullValidator;
             }
-        }
 
-        if (invokeNgChange) {
             this.ngChange(this.value);
         }
 
@@ -200,6 +210,7 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
             this.setInputValue();
             setTimeout(() => this.setSelection(0, this.inputValue.length));
         }
+        this.onFocus.emit();
     }
 
     handleBlur() {
@@ -208,6 +219,7 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
             this.ngTouched();
             this.setInputValue();
         }
+        this.onBlur.emit();
     }
 
     handleKeyDown(event: KeyboardEvent) {
@@ -227,7 +239,7 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
 
     private verifySettings() {
         if (Helper.isNumber(this.min) && Helper.isNumber(this.max) && this.min > this.max) {
-            throw new Error('The max value should be bigger than the min');
+            throw new Error('The max value should be bigger than the min value');
         }
     }
 

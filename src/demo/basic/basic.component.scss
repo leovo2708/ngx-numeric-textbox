@@ -1,7 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-
-ngx-win-limit-setting-textbox,
-ngx-numeric-textbox {
+:host /deep/ ngx-numeric-textbox {
     &.ng-valid {
         input {
             border-left: 5px solid #42A948;
