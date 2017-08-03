@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { NumericTextboxComponent } from '../../lib';
 
 @Component({
     selector: 'ngx-basic',
@@ -6,6 +7,7 @@ import { Component } from '@angular/core';
     styleUrls: ['./basic.component.scss']
 })
 export class BasicComponent {
+    @ViewChild(NumericTextboxComponent) component: NumericTextboxComponent;
     min = -1000;
     max = 1000;
     disabled = false;
@@ -36,5 +38,13 @@ export class BasicComponent {
 
     onValueChange(value: number) {
         console.log(value);
+    }
+
+    focus() {
+        this.component.focus();
+    }
+
+    blur() {
+        this.component.blur();
     }
 }
