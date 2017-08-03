@@ -16,6 +16,7 @@ export class BasicComponent {
     format = '$ 0,0.000';
     rangeValidation = true;
     eventLog: string;
+    customValue = 1;
 
     onFocus() {
         this.eventLog = 'focus';
@@ -27,5 +28,13 @@ export class BasicComponent {
 
     onModelChange() {
         this.eventLog = 'ngModelChange';
+    }
+
+    doubleCustom() {
+        this.customValue = this.customValue * 2;
+    }
+
+    onValueChange(value: number) {
+        console.log(value);
     }
 }

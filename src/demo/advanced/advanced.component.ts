@@ -5,9 +5,9 @@ import { Component } from '@angular/core';
     templateUrl: './advanced.component.html'
 })
 export class AdvancedComponent {
-    orangeWinLimit = 0;
-    yellowWinLimit = 0;
-    redWinLimit = 0;
+    orangeWinLimit = 1;
+    yellowWinLimit = 2;
+    redWinLimit = 3;
 
     onSubmit() {
         alert('Submitted');

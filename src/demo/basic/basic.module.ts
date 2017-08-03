@@ -3,10 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { NumericTextboxModule } from 'ngx-numeric-textbox';
 import { BasicComponent } from './basic.component';
+import { CustomComponent } from './custom.component';
 
 @NgModule({
     declarations: [
-        BasicComponent
+        BasicComponent,
+        CustomComponent
     ],
     imports: [
         BrowserModule,

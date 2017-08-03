@@ -19,9 +19,6 @@ const keyCodes = {
 };
 
 const Helper = {
-    isNumber(value: any): boolean {
-        return !_.isNil(value) && !_.isNaN(value);
-    },
     anyChanges(properties: string[], changes: SimpleChanges): boolean {
         for (const property of properties) {
             if (changes[property] !== undefined) {
@@ -35,7 +32,7 @@ const Helper = {
 
 export function createMinValidator(min: number): ValidatorFn {
     return (control: AbstractControl) => {
-        if (Helper.isNumber(control.value) && control.value < min) {
+        if (_.isNumber(control.value) && control.value < min) {
             return {
                 minError: {
                     minValue: min,
@@ -50,7 +47,7 @@ export function createMinValidator(min: number): ValidatorFn {
 
 export function createMaxValidator(max: number): ValidatorFn {
     return (control: AbstractControl) => {
-        if (Helper.isNumber(control.value) && control.value > max) {
+        if (_.isNumber(control.value) && control.value > max) {
             return {
                 maxError: {
                     maxValue: max,
@@ -142,13 +139,13 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
         this.verifySettings();
 
         if (Helper.anyChanges(['min', 'max', 'rangeValidation'], changes)) {
-            if (Helper.isNumber(this.min) && this.rangeValidation) {
+            if (_.isNumber(this.min) && this.rangeValidation) {
                 this.minValidateFn = createMinValidator(this.min);
             } else {
                 this.minValidateFn = Validators.nullValidator;
             }
 
-            if (Helper.isNumber(this.max) && this.rangeValidation) {
+            if (_.isNumber(this.max) && this.rangeValidation) {
                 this.maxValidateFn = createMaxValidator(this.max);
             } else {
                 this.maxValidateFn = Validators.nullValidator;
@@ -238,7 +235,7 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
     }
 
     private verifySettings() {
-        if (Helper.isNumber(this.min) && Helper.isNumber(this.max) && this.min > this.max) {
+        if (_.isNumber(this.min) && _.isNumber(this.max) && this.min > this.max) {
             throw new Error('The max value should be bigger than the min value');
         }
     }
@@ -260,11 +257,11 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
     }
 
     private limitValue(value: number): number {
-        if (Helper.isNumber(this.max) && value > this.max) {
+        if (_.isNumber(this.max) && value > this.max) {
             return this.max;
         }
 
-        if (Helper.isNumber(this.min) && value < this.min) {
+        if (_.isNumber(this.min) && value < this.min) {
             return this.min;
         }
 
@@ -272,12 +269,12 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
     }
 
     private isInRange(value: number): boolean {
-        if (Helper.isNumber(value)) {
-            if (Helper.isNumber(this.min) && value < this.min) {
+        if (_.isNumber(value)) {
+            if (_.isNumber(this.min) && value < this.min) {
                 return false;
             }
 
-            if (Helper.isNumber(this.max) && value > this.max) {
+            if (_.isNumber(this.max) && value > this.max) {
                 return false;
             }
         }
@@ -295,7 +292,7 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
     }
 
     private restrictDecimals(value: number): number {
-        if (Helper.isNumber(this.decimals) && this.decimals > 0) {
+        if (_.isNumber(this.decimals) && this.decimals > 0) {
             const words = String(value).split('.');
             if (words.length === 2) {
                 const decimalPart = words[1];

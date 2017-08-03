@@ -1,23 +1,25 @@
 <div class="text-success">
-    Note: Orange &lt;= Yellow &lt;= Red. If value is 0 then there is no need to validate.
+    Note: Orange &lt;= Yellow &lt;= Red. If value is 0 or min = 0 or max = 0 then there is no need to validate.
 </div>
 <br>
 <form #settingForm="ngForm" (ngSubmit)="onSubmit()">
     <div class="row">
         <div class="col-4">
+            <div class="text-center">Orange</div>
             <div class="form-group">
-                <ngx-win-limit-setting-textbox name="orangeWinLimit" [min]="0" [max]="yellowWinLimit" [(ngModel)]="orangeWinLimit" #orange="ngModel">
-                </ngx-win-limit-setting-textbox>
+                <ngx-win-limit-textbox name="orangeWinLimit" [min]="0" [max]="yellowWinLimit" [(ngModel)]="orangeWinLimit" #orange="ngModel">
+                </ngx-win-limit-textbox>
             </div>
             <div *ngIf="orange.invalid" class="alert alert-danger">
                 Orange &lt;= Yellow
             </div>
         </div>
         <div class="col-4">
+            <div class="text-center">Yellow</div>
             <div class="form-group">
-                <ngx-win-limit-setting-textbox name="yellowWinLimit" [min]="orangeWinLimit" [max]="redWinLimit" [(ngModel)]="yellowWinLimit"
+                <ngx-win-limit-textbox name="yellowWinLimit" [min]="orangeWinLimit" [max]="redWinLimit" [(ngModel)]="yellowWinLimit"
                     #yellow="ngModel">
-                </ngx-win-limit-setting-textbox>
+                </ngx-win-limit-textbox>
             </div>
             <div *ngIf="yellow.invalid">
                 <div [hidden]="!yellow.errors.minError" class="alert alert-danger">
@@ -29,9 +31,10 @@
             </div>
         </div>
         <div class="col-4">
+            <div class="text-center">Red</div>
             <div class="form-group">
-                <ngx-win-limit-setting-textbox name="redWinLimit" [min]="yellowWinLimit" [max]="1000000000" [(ngModel)]="redWinLimit" #red="ngModel">
-                </ngx-win-limit-setting-textbox>
+                <ngx-win-limit-textbox name="redWinLimit" [min]="yellowWinLimit" [max]="1000000000" [(ngModel)]="redWinLimit" #red="ngModel">
+                </ngx-win-limit-textbox>
             </div>
             <div *ngIf="red.invalid" class="alert alert-danger">
                 Red &gt;= Yellow

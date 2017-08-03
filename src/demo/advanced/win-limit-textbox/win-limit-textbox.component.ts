@@ -5,23 +5,23 @@ import {
 } from '@angular/forms';
 
 @Component({
-    selector: 'ngx-win-limit-setting-textbox',
-    templateUrl: './win-limit-setting-textbox.component.html',
+    selector: 'ngx-win-limit-textbox',
+    templateUrl: './win-limit-textbox.component.html',
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => WinLimitSettingTextboxComponent),
+            useExisting: forwardRef(() => WinLimitTextboxComponent),
             multi: true
         },
         {
             provide: NG_VALIDATORS,
-            useExisting: forwardRef(() => WinLimitSettingTextboxComponent),
+            useExisting: forwardRef(() => WinLimitTextboxComponent),
             multi: true
         }
     ],
     exportAs: 'ngxWinLimitSettingTextbox'
 })
-export class WinLimitSettingTextboxComponent implements ControlValueAccessor, Validator, OnChanges {
+export class WinLimitTextboxComponent implements ControlValueAccessor, Validator, OnChanges {
     @Input() min: number;
     @Input() max: number;
     @Input() value: number;
@@ -37,7 +37,7 @@ export class WinLimitSettingTextboxComponent implements ControlValueAccessor, Va
             return null;
         }
 
-        if (this.value < this.min) {
+        if (this.min !== 0 && this.value < this.min) {
             return {
                 minError: {
                     minValue: this.min,
@@ -46,7 +46,7 @@ export class WinLimitSettingTextboxComponent implements ControlValueAccessor, Va
             };
         }
 
-        if (this.value > this.max) {
+        if (this.max !== 0 && this.value > this.max) {
             return {
                 maxError: {
                     maxValue: this.max,
