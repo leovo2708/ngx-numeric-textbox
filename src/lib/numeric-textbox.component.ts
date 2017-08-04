@@ -12,6 +12,8 @@ import * as _ from 'lodash';
 const numericRegex = /^-?(?:(?:\d+(\.\d*)?)|(?:\.\d*))?$/;
 
 const keyCodes = {
+    enter: 13,
+    escape: 27,
     left: 37,
     up: 38,
     right: 39,
@@ -93,6 +95,8 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
     @Output('focus') onFocus = new EventEmitter();
     // tslint:disable-next-line:no-output-rename
     @Output('blur') onBlur = new EventEmitter();
+    @Output() enter = new EventEmitter();
+    @Output() escape = new EventEmitter();
     private minValidateFn = Validators.nullValidator;
     private maxValidateFn = Validators.nullValidator;
     private focused = false;
@@ -221,15 +225,19 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
 
     handleKeyDown(event: KeyboardEvent) {
         if (!this.disabled) {
-            let step = 0;
-            if (event.keyCode === keyCodes.down) {
-                step = -1;
-            } else if (event.keyCode === keyCodes.up) {
-                step = 1;
-            }
-
-            if (step !== 0) {
-                this.addStep(step);
+            switch (event.keyCode) {
+                case keyCodes.down:
+                    this.addStep(-1);
+                    break;
+                case keyCodes.up:
+                    this.addStep(1);
+                    break;
+                case keyCodes.enter:
+                    this.enter.emit();
+                    break;
+                case keyCodes.escape:
+                    this.escape.emit();
+                    break;
             }
         }
     }

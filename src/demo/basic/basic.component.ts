@@ -28,6 +28,14 @@ export class BasicComponent {
         this.eventLog = 'blur';
     }
 
+    onEnter() {
+        this.eventLog = 'enter';
+    }
+
+    onEscape() {
+        this.eventLog = 'escape';
+    }
+
     onModelChange() {
         this.eventLog = 'ngModelChange';
     }

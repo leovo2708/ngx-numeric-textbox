@@ -57,6 +57,8 @@ export class AppModule {
     [(ngModel)]="value"
     (focus)="onFocus()"
     (blur)="onBlur()"
+    (enter)="onEnter()"
+    (escape)="onEscape()"
     (ngModelChange)="ngModelChange($event)">
 </ngx-numeric-textbox>
 ```

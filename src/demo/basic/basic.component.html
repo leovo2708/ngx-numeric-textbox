@@ -70,7 +70,7 @@
             <form #templateForm="ngForm">
                 <ngx-numeric-textbox name="currency" [min]="min" [max]="max" [disabled]="disabled" [autoCorrect]="autoCorrect" [decimals]="decimals"
                     [format]="format" [rangeValidation]="rangeValidation" [(ngModel)]="value" [placeholder]="placeholder" (ngModelChange)="onModelChange()"
-                    (focus)="onFocus()" (blur)="onBlur()">
+                    (focus)="onFocus()" (blur)="onBlur()" (enter)="onEnter()" (escape)="onEscape()">
                 </ngx-numeric-textbox>
             </form>
         </div>
