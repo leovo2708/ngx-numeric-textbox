@@ -9,8 +9,6 @@ import {
 import * as numeral from 'numeral';
 import * as _ from 'lodash';
 
-const numericRegex = /^-?(?:(?:\d+(\.\d*)?)|(?:\.\d*))?$/;
-
 const keyCodes = {
     enter: 13,
     escape: 27,
@@ -29,6 +27,11 @@ const Helper = {
         }
 
         return false;
+    },
+    createNumericRegex(hasDecimal: boolean): RegExp {
+        return hasDecimal
+            ? /^-?(?:(?:\d+(\.\d*)?)|(?:\.\d*))?$/
+            : /^-?(?:(?:\d+)|(?:\.\d*))?$/;
     }
 };
 
@@ -102,6 +105,7 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
     private focused = false;
     private inputValue: string;
     private previousValue = undefined;
+    private numericRegex: RegExp;
     private ngChange = (value: number) => { };
     private ngTouched = () => { };
 
@@ -141,6 +145,10 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
 
     ngOnChanges(changes: SimpleChanges) {
         this.verifySettings();
+
+        if (Helper.anyChanges(['autoCorrect', 'decimals'], changes)) {
+            delete this.numericRegex;
+        }
 
         if (Helper.anyChanges(['min', 'max', 'rangeValidation'], changes)) {
             if (_.isNumber(this.min) && this.rangeValidation) {
@@ -246,9 +254,23 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
         if (_.isNumber(this.min) && _.isNumber(this.max) && this.min > this.max) {
             throw new Error('The max value should be bigger than the min value');
         }
+
+        if (_.isNumber(this.decimals) && this.decimals < 0) {
+            throw new Error('The decimals value should be bigger than 0');
+        }
     }
 
     private isValidInput(input: string) {
+        let numericRegex = this.numericRegex;
+        if (_.isNil(numericRegex)) {
+            let hasDecimal = true;
+            if (_.isNumber(this.decimals) && this.decimals === 0) {
+                hasDecimal = false;
+            }
+
+            numericRegex = Helper.createNumericRegex(hasDecimal);
+        }
+
         return numericRegex.test(input);
     }
 
@@ -300,7 +322,7 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
     }
 
     private restrictDecimals(value: number): number {
-        if (_.isNumber(this.decimals) && this.decimals > 0) {
+        if (_.isNumber(this.decimals)) {
             const words = String(value).split('.');
             if (words.length === 2) {
                 const decimalPart = words[1];
