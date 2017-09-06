@@ -233,7 +233,7 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
 
     handleKeyDown(event: KeyboardEvent) {
         if (!this.disabled) {
-            switch (event.keyCode) {
+            switch (event.which) {
                 case keyCodes.down:
                     this.addStep(-1);
                     break;
