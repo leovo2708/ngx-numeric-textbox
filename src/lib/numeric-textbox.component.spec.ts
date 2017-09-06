@@ -2,6 +2,7 @@ import { TestBed, async, ComponentFixture, fakeAsync, tick } from '@angular/core
 import { DebugElement, Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { NumericTextboxModule } from './index';
+import { Helper, expect } from '../testing';
 
 @Component({
     selector: 'ngx-test',
@@ -10,7 +11,6 @@ import { NumericTextboxModule } from './index';
 class TestComponent {
     value = 1;
     onEnter() {
-        console.log('onEnter');
     }
 }
 
@@ -26,6 +26,7 @@ function createTestComponent(template: string): ComponentFixture<TestComponent> 
 describe('NumericTextboxComponent', () => {
     let fixture: ComponentFixture<TestComponent>;
     let component: TestComponent;
+    let input: DebugElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -44,14 +45,30 @@ describe('NumericTextboxComponent', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
         tick();
+        input = fixture.debugElement.query(By.css('input'));
     }));
+
+    it('should display text "1.00"', () => {
+        expect(input.nativeElement.value).toBe('1.00');
+    });
+
+    describe('focus', () => {
+        beforeEach(fakeAsync(() => {
+            input.triggerEventHandler('focus', {});
+            fixture.detectChanges();
+            tick();
+        }));
+
+        it('should display text "1"', () => {
+            expect(input.nativeElement.value).toBe('1');
+        });
+    });
 
     describe('Press "Enter"', () => {
         let enterSpy: jasmine.Spy;
 
         beforeEach(fakeAsync(() => {
             enterSpy = spyOn(component, 'onEnter').and.callThrough();
-            const input = fixture.debugElement.query(By.css('input'));
             input.triggerEventHandler('keydown', {
                 which: 13
             });
@@ -61,6 +78,30 @@ describe('NumericTextboxComponent', () => {
 
         it('should emit event enter', () => {
             expect(enterSpy.calls.any()).toBeTruthy();
+        });
+    });
+
+    describe('Input new value "2"', () => {
+        beforeEach(fakeAsync(() => {
+            Helper.raiseInputEvent(input.nativeElement, '2');
+            fixture.detectChanges();
+            tick();
+        }));
+
+        it('should display text "2"', () => {
+            expect(input.nativeElement.value).toBe('2');
+        });
+
+        describe('blur', () => {
+            beforeEach(fakeAsync(() => {
+                input.triggerEventHandler('blur', {});
+                fixture.detectChanges();
+                tick();
+            }));
+
+            it('should display text "2"', () => {
+                expect(input.nativeElement.value).toBe('2');
+            });
         });
     });
 });
