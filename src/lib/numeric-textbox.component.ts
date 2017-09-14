@@ -28,10 +28,19 @@ const Helper = {
 
         return false;
     },
-    createNumericRegex(hasDecimal: boolean): RegExp {
-        return hasDecimal
-            ? /^-?(?:(?:\d+(\.\d*)?)|(?:\.\d*))?$/
-            : /^-?(?:(?:\d+)|(?:\.\d*))?$/;
+    createNumericRegex(hasDecimal: boolean, hasSign: boolean): RegExp {
+        let regexString = '^';
+        if (hasSign) {
+            regexString += '-?';
+        }
+
+        regexString += '(?:(?:\\d+';
+        if (hasDecimal) {
+            regexString += '(\\.\\d*)?';
+        }
+
+        regexString += ')|(?:\\.\\d*))?$';
+        return new RegExp(regexString);
     }
 };
 
@@ -252,7 +261,12 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
                 hasDecimal = false;
             }
 
-            numericRegex = Helper.createNumericRegex(hasDecimal);
+            let hasSign = true;
+            if (_.isNumber(this.min) && this.min >= 0 && this.autoCorrect) {
+                hasSign = false;
+            }
+
+            numericRegex = Helper.createNumericRegex(hasDecimal, hasSign);
         }
 
         return numericRegex.test(input);

@@ -7,8 +7,8 @@ describe('ngx-numeric-textbox App', () => {
     page = new NgxNumericTextboxPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display "ngx-numeric-textbox"', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(page.getParagraphText()).toEqual('ngx-numeric-textbox');
   });
 });

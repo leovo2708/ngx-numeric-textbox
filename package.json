@@ -1,6 +1,6 @@
 {
   "name": "ngx-numeric-textbox",
-  "version": "0.0.11",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "start": "ng serve",
