@@ -40,8 +40,8 @@ export class BasicComponent {
         this.eventLog = 'ngModelChange';
     }
 
-    doubleCustom() {
-        this.customValue = this.customValue * 2;
+    doubleValue() {
+        this.value = this.value * 2;
     }
 
     onValueChange(value: number) {

@@ -80,6 +80,7 @@
             <p>Validator: <span *ngIf="!templateForm.valid">{{templateForm.controls.currency.errors | json}}</span></p>
         </div>
         <div class="form-group">
+                <button class="btn btn-secondary" (click)="doubleValue()">Double Value</button>
             <button class="btn btn-secondary" (click)="focus()">Focus</button>
             <button class="btn btn-secondary" (click)="blur()">Blur</button>
         </div>

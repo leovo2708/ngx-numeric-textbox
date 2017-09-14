@@ -1,3 +1,3 @@
-<ngx-numeric-textbox [min]="0" [max]="1000000000" [autoCorrect]="true" [(value)]="value" (valueChange)="onValueChange()"
+<ngx-numeric-textbox [min]="0" [max]="1000000000" [autoCorrect]="true" [(ngModel)]="value" (ngModelChange)="onModelChange()"
     (blur)="onBlur()">
 </ngx-numeric-textbox>

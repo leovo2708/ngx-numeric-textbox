@@ -1,5 +1,6 @@
 import { TestBed, async, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { DebugElement, Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NumericTextboxModule } from './index';
 import { Helper, expect } from '../testing';
@@ -31,6 +32,7 @@ describe('NumericTextboxComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+                FormsModule,
                 NumericTextboxModule
             ],
             declarations: [
@@ -40,7 +42,7 @@ describe('NumericTextboxComponent', () => {
     });
 
     beforeEach(fakeAsync(() => {
-        const template = '<ngx-numeric-textbox [(value)]="value" (enter)="onEnter()"></ngx-numeric-textbox>';
+        const template = '<ngx-numeric-textbox [(ngModel)]="value" (enter)="onEnter()"></ngx-numeric-textbox>';
         fixture = createTestComponent(template);
         component = fixture.componentInstance;
         fixture.detectChanges();

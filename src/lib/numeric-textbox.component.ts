@@ -166,23 +166,7 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
             this.ngChange(this.value);
         }
 
-        let invokeSetInputValue = false;
-        if (this.previousValue === undefined) {
-            if (Helper.anyChanges(['value'], changes)) {
-                const valueChange = changes['value'];
-                if (valueChange.isFirstChange || valueChange.previousValue !== this.previousValue) {
-                    invokeSetInputValue = true;
-                }
-            }
-        } else {
-            this.previousValue = undefined;
-        }
-
-        if (!invokeSetInputValue && Helper.anyChanges(['format'], changes)) {
-            invokeSetInputValue = true;
-        }
-
-        if (invokeSetInputValue) {
+        if (Helper.anyChanges(['format'], changes)) {
             this.setInputValue();
         }
     }

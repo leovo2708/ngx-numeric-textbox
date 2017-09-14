@@ -5,23 +5,23 @@ import {
 } from '@angular/forms';
 
 @Component({
-    selector: 'ngx-win-limit-textbox',
-    templateUrl: './win-limit-textbox.component.html',
+    selector: 'ngx-loss-limit-textbox',
+    templateUrl: './loss-limit-textbox.component.html',
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => WinLimitTextboxComponent),
+            useExisting: forwardRef(() => LossLimitTextboxComponent),
             multi: true
         },
         {
             provide: NG_VALIDATORS,
-            useExisting: forwardRef(() => WinLimitTextboxComponent),
+            useExisting: forwardRef(() => LossLimitTextboxComponent),
             multi: true
         }
     ],
     exportAs: 'ngxWinLimitSettingTextbox'
 })
-export class WinLimitTextboxComponent implements ControlValueAccessor, Validator, OnChanges {
+export class LossLimitTextboxComponent implements ControlValueAccessor, Validator, OnChanges {
     @Input() min: number;
     @Input() max: number;
     @Input() value: number;
