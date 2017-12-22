@@ -49,10 +49,10 @@ export class BasicComponent {
     }
 
     focus() {
-        this.component.focus();
+        this.component.focusInput();
     }
 
     blur() {
-        this.component.blur();
+        this.component.blurInput();
     }
 }

@@ -1,6 +1,6 @@
 import {
     Component, Input, Output, EventEmitter, ViewChild, ElementRef,
-    Renderer, forwardRef, OnChanges, SimpleChanges
+    Renderer2, forwardRef, OnChanges, SimpleChanges
 } from '@angular/core';
 import {
     NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, AbstractControl,
@@ -103,10 +103,8 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
     @Input() autoCorrect = false;
     @Input() rangeValidation = true;
     @Output() valueChange = new EventEmitter<number>();
-    // tslint:disable-next-line:no-output-rename
-    @Output('focus') onFocus = new EventEmitter();
-    // tslint:disable-next-line:no-output-rename
-    @Output('blur') onBlur = new EventEmitter();
+    @Output() focus = new EventEmitter();
+    @Output() blur = new EventEmitter();
     @Output() enter = new EventEmitter();
     @Output() escape = new EventEmitter();
     private minValidateFn = Validators.nullValidator;
@@ -119,15 +117,15 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
     private ngTouched = () => { };
 
     constructor(
-        private renderer: Renderer
+        private renderer2: Renderer2
     ) { }
 
-    focus() {
-        this.renderer.invokeElementMethod(this.numericInput.nativeElement, 'focus');
+    focusInput() {
+        this.numericInput.nativeElement.focus();
     }
 
-    blur() {
-        this.renderer.invokeElementMethod(this.numericInput.nativeElement, 'blur');
+    blurInput() {
+        this.numericInput.nativeElement.blur();
     }
 
     validate(control: AbstractControl): { [key: string]: any } {
@@ -212,7 +210,7 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
             this.setInputValue();
             setTimeout(() => this.setSelection(0, this.inputValue.length));
         }
-        this.onFocus.emit();
+        this.focus.emit();
     }
 
     handleBlur() {
@@ -221,7 +219,7 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
             this.ngTouched();
             this.setInputValue();
         }
-        this.onBlur.emit();
+        this.blur.emit();
     }
 
     handleKeyDown(event: KeyboardEvent) {
@@ -338,7 +336,7 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
             value = this.value;
         }
         const inputValue = this.formatValue(value);
-        this.renderer.setElementProperty(this.numericInput.nativeElement, 'value', inputValue);
+        this.renderer2.setProperty(this.numericInput.nativeElement, 'value', inputValue);
         this.inputValue = inputValue;
     }
 
@@ -372,6 +370,6 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
     }
 
     private setSelection(start: number, end: number) {
-        this.renderer.invokeElementMethod(this.numericInput.nativeElement, 'setSelectionRange', [start, end]);
+        this.numericInput.nativeElement.setSelectionRange(start, end);
     }
 }
