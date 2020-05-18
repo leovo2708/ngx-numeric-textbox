@@ -301,7 +301,7 @@ var NumericTextboxComponent = /** @class */ (function () {
     };
     NumericTextboxComponent.ɵfac = function NumericTextboxComponent_Factory(t) { return new (t || NumericTextboxComponent)(i0.ɵɵdirectiveInject(i0.Renderer2)); };
     NumericTextboxComponent.ɵcmp = i0.ɵɵdefineComponent({ type: NumericTextboxComponent, selectors: [["ngx-numeric-textbox"]], viewQuery: function NumericTextboxComponent_Query(rf, ctx) { if (rf & 1) {
-            i0.ɵɵviewQuery(_c0, true);
+            i0.ɵɵstaticViewQuery(_c0, true);
         } if (rf & 2) {
             var _t;
             i0.ɵɵqueryRefresh(_t = i0.ɵɵloadQuery()) && (ctx.numericInput = _t.first);
@@ -348,7 +348,7 @@ export { NumericTextboxComponent };
             }]
     }], function () { return [{ type: i0.Renderer2 }]; }, { numericInput: [{
             type: ViewChild,
-            args: ['numericInput']
+            args: ['numericInput', { static: true }]
         }], min: [{
             type: Input
         }], max: [{

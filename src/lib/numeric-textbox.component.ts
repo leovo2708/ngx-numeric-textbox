@@ -97,7 +97,7 @@ export function createMaxValidator(max: number): ValidatorFn {
   exportAs: 'ngxNumericTextbox'
 })
 export class NumericTextboxComponent implements ControlValueAccessor, Validator, OnChanges {
-  @ViewChild('numericInput') numericInput: ElementRef;
+  @ViewChild('numericInput', {static: true}) numericInput: ElementRef;
   @Input() min = Number.MIN_SAFE_INTEGER;
   @Input() max = Number.MAX_SAFE_INTEGER;
   @Input() value: number;
