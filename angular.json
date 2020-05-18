@@ -4,7 +4,7 @@
   "newProjectRoot": "projects",
   "projects": {
     "ngx-numeric-textbox": {
-      "projectType": "application",
+      "projectType": "library",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
