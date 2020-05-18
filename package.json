@@ -35,10 +35,10 @@
   "bugs": {
     "url": "https://github.com/dur00s/ngx-numeric-textbox/issues"
   },
-  "main": "src/index.js",
-  "module": "src/index.js",
-  "jsnext:main": "src/index.js",
-  "types": "src/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "jsnext:main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "private": false,
   "dependencies": {
     "@angular/animations": "^9.1.7",
