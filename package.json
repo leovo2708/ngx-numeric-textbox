@@ -1,6 +1,6 @@
 {
   "name": "ngx-numeric-textbox",
-  "version": "6.0.0",
+  "version": "1.0.0",
   "license": "MIT",
   "description": "An Angular numeric textbox component",
   "scripts": {
@@ -27,13 +27,13 @@
     "ngx-numeric-textbox",
     "angular numeric textbox component"
   ],
-  "author": "Leo Vo <leovo2708@gmail.com>",
+  "author": "dur00s <mmertas@seznam.cz>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/leovo2708/ngx-numeric-textbox.git"
+    "url": "git+https://github.com/dur00s/ngx-numeric-textbox"
   },
   "bugs": {
-    "url": "https://github.com/leovo2708/ngx-numeric-textbox/issues"
+    "url": "https://github.com/dur00s/ngx-numeric-textbox/issues"
   },
   "main": "src/index.js",
   "module": "src/index.js",

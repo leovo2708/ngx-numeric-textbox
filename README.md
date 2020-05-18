@@ -1,19 +1,6 @@
 # ngx-numeric-textbox
 
-An Angular numeric textbox component
-
-## Dependencies
-
-* [Angular](https://angular.io)
-* [Lodash](https://lodash.com)
-* [Numeral](http://numeraljs.com)
-* [Bootstrap 4 alpha 6](https://v4-alpha.getbootstrap.com)
-
-You can customize CSS yourself to break down dependencies to Bootstrap.
-
-## Demo
-
-[https://leovo2708.github.io/ngx-numeric-textbox/](https://leovo2708.github.io/ngx-numeric-textbox/)
+Fork of [ngx-numeric-textbox](https://github.com/leovo2708/ngx-numeric-textbox) upgraded to be usable with Angular 9
 
 ## Installation
 
@@ -64,7 +51,3 @@ export class AppModule {
 ```
 
 * format string: http://numeraljs.com/#format
-
-## Contributing
-
-I am very appreciate for your ideas, proposals and found bugs which you can leave in github issues. Thanks in advance!
