@@ -1,6 +1,6 @@
 {
   "name": "@drrrs/ngx-numeric-textbox",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "description": "An Angular numeric textbox component",
   "scripts": {
@@ -12,6 +12,7 @@
     "ci": "npm run lint && npm run test-coverage && npm run e2e",
     "prebuild:lib": "rimraf tmp dist/lib",
     "build:lib": "gulp inline-templates && ngc -p tsconfig-lib.json && copyfiles package.json README.md LICENSE dist/lib",
+    "postbuild:lib": "copyfiles -f dist/lib/src/tmp/* dist/lib/src && rimraf dist/lib/src/tmp",
     "prebuild:demo": "rimraf dist/demo",
     "build:demo": "ng build --prod",
     "pub:lib": "npm run build:lib && npm publish dist/lib",
@@ -35,10 +36,10 @@
   "bugs": {
     "url": "https://github.com/dur00s/ngx-numeric-textbox/issues"
   },
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "jsnext:main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "jsnext:main": "src/index.js",
+  "types": "src/index.d.ts",
   "private": false,
   "dependencies": {
     "@angular/animations": "^9.1.7",
