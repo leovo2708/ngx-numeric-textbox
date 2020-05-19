@@ -4,7 +4,7 @@ Fork of [ngx-numeric-textbox](https://github.com/leovo2708/ngx-numeric-textbox) 
 
 ## Installation
 
-After install the above dependencies, install `ngx-numeric-textbox` via:
+Install `ngx-numeric-textbox` via:
 ```shell
 npm install ngx-numeric-textbox --save
 ```
