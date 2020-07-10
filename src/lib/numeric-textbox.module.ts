@@ -1,7 +1,7 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {NumericTextboxComponent} from './numeric-textbox.component';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { NumericTextboxComponent } from './numeric-textbox.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [
@@ -15,4 +15,4 @@ import {NumericTextboxComponent} from './numeric-textbox.component';
     NumericTextboxComponent
   ]
 })
-export class NumericTextboxModule {}
+export class NumericTextboxModule { }
