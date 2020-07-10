@@ -4,9 +4,9 @@ Fork of [ngx-numeric-textbox](https://github.com/leovo2708/ngx-numeric-textbox) 
 
 ## Installation
 
-Install `ngx-numeric-textbox` via:
+Install `@drrrs/ngx-numeric-textbox` via:
 ```shell
-npm install ngx-numeric-textbox --save
+npm install @drrrs/ngx-numeric-textbox --save
 ```
 Once installed you need to import our main module in your application module:
 ```js
