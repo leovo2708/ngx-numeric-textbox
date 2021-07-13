@@ -49,7 +49,7 @@ const Helper = {
   }
 };
 
-export function createMinValidator(min: number): ValidatorFn {
+export const createMinValidator = (min: number): ValidatorFn => {
   return (control: AbstractControl) => {
     if (_.isNumber(control.value) && control.value < min) {
       return {
@@ -62,9 +62,9 @@ export function createMinValidator(min: number): ValidatorFn {
 
     return null;
   };
-}
+};
 
-export function createMaxValidator(max: number): ValidatorFn {
+export const createMaxValidator = (max: number): ValidatorFn => {
   return (control: AbstractControl) => {
     if (_.isNumber(control.value) && control.value > max) {
       return {
@@ -77,7 +77,7 @@ export function createMaxValidator(max: number): ValidatorFn {
 
     return null;
   };
-}
+};
 
 @Component({
   selector: 'ngx-numeric-textbox',
