@@ -33,7 +33,7 @@ const Helper = {
 
     return false;
   },
-  createNumericRegex(hasDecimal: boolean, hasSign: boolean): RegExp {
+  createNumericRegex(hasDecimal: boolean, hasSign: boolean, decSep: string): RegExp {
     let regexString = '^';
     if (hasSign) {
       regexString += '-?';
@@ -41,7 +41,7 @@ const Helper = {
 
     regexString += '(?:(?:\\d+';
     if (hasDecimal) {
-      regexString += '(\\.\\d*)?';
+      regexString += '(\\' + decSep + '\\d*)?';
     }
 
     regexString += ')|(?:\\.\\d*))?$';
@@ -105,6 +105,7 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
   @Input() decimals = 2;
   @Input() disabled = false;
   @Input() format = '0,0.00';
+  @Input() decSep = ',';
   @Input() autoCorrect = false;
   @Input() rangeValidation = true;
   @Output() valueChange = new EventEmitter<number>();
@@ -269,14 +270,18 @@ export class NumericTextboxComponent implements ControlValueAccessor, Validator,
         hasSign = false;
       }
 
-      numericRegex = Helper.createNumericRegex(hasDecimal, hasSign);
+      numericRegex = Helper.createNumericRegex(hasDecimal, hasSign, this.decSep);
     }
 
     return numericRegex.test(input);
   }
 
   private parseNumber(input: string): number {
-    return numeral(input).value();
+    let input2 = input;
+    if (this.decSep === ',' && input2.indexOf(',') > 0 ) {
+      input2 = input2.replace(',', '.');
+    }
+    return numeral(input2).value();
   }
 
   private addStep(step: number) {
