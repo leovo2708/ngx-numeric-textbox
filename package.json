@@ -79,7 +79,7 @@
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
     "lodash": "^4.17.4",
-    "node-sass": "^4.9.3",
+    "node-sass": "^7.0.0",
     "numeral": "^2.0.6",
     "protractor": "~5.1.2",
     "rimraf": "^2.6.2",
